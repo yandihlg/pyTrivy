@@ -7,12 +7,13 @@ from pyResult import Result
 def encontrar_etiqueta_segura(imagen, vulnerabilidades_prohibidas):
     tmp_json = "tmp.json"
     lista_etiquetas = []
+    data=None
     # Obtener la lista de todas las etiquetas de la imagen
     comando = ["trivy", "-f", "json", "-o", tmp_json, "image", imagen]
     subprocess.run(comando, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-    file= open('tmp.json', 'r')
+    with open('tmp.json', 'r', encoding='utf-8') as file:
     # Cargar el contenido del archivo JSON en un diccionario
-    data = json.loads(file.read())
+        data = json.loads(file.read(), )
     file.close()
     # Obtener la lista de vulnerabilidades de la imagen
     vulnerability_image = data["Results"][0]["Vulnerabilities"]
